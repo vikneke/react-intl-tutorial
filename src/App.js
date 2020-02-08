@@ -1,25 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import { IntlProvider } from 'react-intl';
+
+import LocalisedComponent from './LocalisedComponent';
+
+import messages_en from './locale/en.json';
+import messages_fr from './locale/fr.json';
+
 import './App.css';
 
-function App() {
+const messages = {
+  'fr': messages_fr,
+  'en': messages_en,
+};
+
+const App = () => {
+  const [locale, setLocale] = useState('en');
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <IntlProvider locale={locale} messages={messages[locale]}>
+      <div className="App">
+        <header className="App-header">
+
+          <LocalisedComponent />
+
+          <div style={{ display: 'flex', margin: '1rem' }}>
+            <button onClick={() => setLocale('en')}>English</button>
+            <button onClick={() => setLocale('fr')}>French</button>
+          </div>
+        </header>
+      </div>
+    </IntlProvider>
   );
 }
 
